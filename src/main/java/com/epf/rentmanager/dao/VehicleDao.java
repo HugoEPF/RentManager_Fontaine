@@ -31,18 +31,21 @@ public class VehicleDao {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement ps =
 					connection.prepareStatement(CREATE_VEHICLE_QUERY, Statement.RETURN_GENERATED_KEYS);
-
-			ps.setLong(1, vehicle.getId());
-			ps.setString(2, vehicle.getConstructeur());
-			ps.setInt(3, vehicle.getNb_places());
-
-			ResultSet resultset = ps.getGeneratedKeys();
-			int id = resultset.getInt(1);
+			System.out.println(vehicle.getConstructeur());
+			System.out.println(vehicle.getNb_places());
+			ps.setString(1, vehicle.getConstructeur());
+			ps.setInt(2, vehicle.getNb_places());
 			ps.execute();
+			int id = 0;
+			ResultSet resultset = ps.getGeneratedKeys();
+			if (resultset.next()) {
+				id = resultset.getInt(1);
+			}
 			ps.close();
 			connection.close();
 			return id;
 		} catch (SQLException ex) {
+
 			throw new RuntimeException(ex);
 		}
 

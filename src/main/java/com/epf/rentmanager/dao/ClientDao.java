@@ -37,10 +37,13 @@ public class ClientDao {
 			ps.setString(1, client.getNom());
 			ps.setString(2, client.getPrenom());
 			ps.setString(3, client.getEmail());
-			ps.setDate(3, Date.valueOf(client.getNaissance()));
-			ResultSet resultset = ps.getGeneratedKeys();
-			int id = resultset.getInt(1);
+			ps.setDate(4, Date.valueOf(client.getNaissance()));
 			ps.execute();
+			int id =0;
+			ResultSet resultset = ps.getGeneratedKeys();
+			if (resultset.next()) {
+				id = resultset.getInt(1);
+			}
 			ps.close();
 			connection.close();
 			return id;

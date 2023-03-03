@@ -16,7 +16,6 @@ public class Client {
     }
 
     public Client() {
-        this(0,"nom","prenom","email",LocalDate.parse("07/02/2001"));
     }
 
     public long getId() {

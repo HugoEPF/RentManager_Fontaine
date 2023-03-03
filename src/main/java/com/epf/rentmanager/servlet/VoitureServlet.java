@@ -2,6 +2,7 @@ package com.epf.rentmanager.servlet;
 
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
@@ -22,12 +23,12 @@ public class VoitureServlet extends HttpServlet {
      */
     private static final long serialVersionUID = 1L;
 
-    private VehicleService vehicleService =  VehicleService.getInstance();
+    private VehicleService vehicleTest =  VehicleService.getInstance();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            request.setAttribute("Constructeur", vehicleService.findById(1).getConstructeur());
+            request.setAttribute("vehicles", vehicleTest.findAll());
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -36,5 +37,7 @@ public class VoitureServlet extends HttpServlet {
                 .forward(request, response);
 
     }
+
+
 
 }

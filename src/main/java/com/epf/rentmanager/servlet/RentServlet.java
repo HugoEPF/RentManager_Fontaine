@@ -25,7 +25,7 @@ public class RentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            request.setAttribute("rentID", reservationService.findByResaByClientId(1));
+            request.setAttribute("rents", reservationService.findAll());
         } catch (ServiceException e) {
             e.printStackTrace();
         }

@@ -26,7 +26,7 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            request.setAttribute("prenomClient", clientService.findById(1).getPrenom());
+            request.setAttribute("users", clientService.findAll());
         } catch ( ServiceException e) {
             e.printStackTrace();
         }
