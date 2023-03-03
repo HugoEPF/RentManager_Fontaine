@@ -1,0 +1,10 @@
+com/epf/rentmanager/servlet/CreateRentServlet.class
+com/epf/rentmanager/servlet/DetailsRentServlet.class
+com/epf/rentmanager/servlet/DetailsVehicleServlet.class
+com/epf/rentmanager/servlet/DetailsUserServlet.class
+com/epf/rentmanager/servlet/UsersServlet.class
+com/epf/rentmanager/servlet/RentServlet.class
+com/epf/rentmanager/servlet/VoitureServlet.class
+com/epf/rentmanager/servlet/CreateUserServlet.class
+com/epf/rentmanager/servlet/CreateVehicleServlet.class
+com/epf/rentmanager/service/ReservationService.class
