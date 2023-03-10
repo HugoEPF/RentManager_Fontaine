@@ -28,16 +28,17 @@
                             <table class="table table-striped">
                                 <tr>
                                     <th style="width: 10px">#</th>
-                                    <th>Voiture</th>
                                     <th>Client</th>
+                                    <th>Voiture</th>
                                     <th>Debut</th>
                                     <th>Fin</th>
                                     <th>Action</th>
                                 </tr>
                                 <tr>
                                     <c:forEach items= "${rents}" var="rent">
-                                          <td>${rent.client_id}.</td>
-                                           <td>${rent.vehicule_id}</td>
+                                        <td>${rent.id}.</td>
+                                          <td>${client.findById(rent.client_id).nom} ${client.findById(rent.client_id).prenom}</td>
+                                           <td>${vehicle.findById(rent.vehicule_id).constructeur}</td>
                                             <td>${rent.debut}</td>
                                                 <td>${rent.fin}</td>
                                                   <td>

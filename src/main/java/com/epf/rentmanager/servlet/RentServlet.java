@@ -22,10 +22,15 @@ public class RentServlet extends HttpServlet {
      */
     private static final long serialVersionUID = 1L;
     private ReservationService reservationService =  ReservationService.getInstance();
+    private ClientService clientService = ClientService.getInstance();
+    private VehicleService vehicleService  = VehicleService.getInstance();
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             request.setAttribute("rents", reservationService.findAll());
+            request.setAttribute("client", clientService);
+            request.setAttribute("vehicle", vehicleService);
         } catch (ServiceException e) {
             e.printStackTrace();
         }

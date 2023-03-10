@@ -33,14 +33,17 @@ public class ReservationDao {
 			PreparedStatement ps =
 					connection.prepareStatement(CREATE_RESERVATION_QUERY, Statement.RETURN_GENERATED_KEYS);
 
-			ps.setLong(1, reservation.getId());
-			ps.setInt(2, reservation.getClient_id());
-			ps.setInt(3, reservation.getVehicule_id());
+
+			ps.setInt(1, reservation.getClient_id());
+			ps.setInt(2, reservation.getVehicule_id());
 			ps.setDate(3, Date.valueOf(reservation.getDebut()));
-			ps.setDate(3, Date.valueOf(reservation.getFin()));
-			ResultSet resultset = ps.getGeneratedKeys();
-			int id = resultset.getInt(1);
+			ps.setDate(4, Date.valueOf(reservation.getFin()));
 			ps.execute();
+			ResultSet resultset = ps.getGeneratedKeys();
+			int id = 0;
+			if(resultset.next()) {
+				id = resultset.getInt(1);
+			}
 			ps.close();
 			connection.close();
 			return id;
@@ -104,11 +107,13 @@ public class ReservationDao {
 			while(rs.next()) {
 				int id = rs.getInt("id");
 				int client_id = rs.getInt("client_id");
-				int vehicle_id = rs.getInt("vehicule_id");
+				int vehicle_id = rs.getInt("vehicle_id");
 				LocalDate debut = rs.getDate("debut").toLocalDate();
 				LocalDate fin = rs.getDate("fin").toLocalDate();
 				reservations.add(new Reservation(id, client_id, vehicle_id, debut, fin));
 			}
+			connection.close();
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

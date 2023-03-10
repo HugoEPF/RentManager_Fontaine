@@ -8,12 +8,17 @@ public class Reservation {
     private int vehicule_id;
     private LocalDate debut;
     private LocalDate fin;
+
     public Reservation(int id, int client_id, int vehicule_id, LocalDate debut, LocalDate fin) {
     this.id = id;
     this.client_id = client_id;
     this.vehicule_id = vehicule_id;
     this.debut = debut;
     this.fin = fin;
+    }
+
+    public Reservation() {
+
     }
 
     public long getId() {
