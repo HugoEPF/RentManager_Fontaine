@@ -8,19 +8,15 @@ import java.util.List;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.persistence.ConnectionManager;
+import org.springframework.stereotype.Repository;
+
+@Repository
 
 public class ClientDao {
 
-	private static ClientDao instance = null;
+	//private static ClientDao instance = null;
 
 	private ClientDao() {
-	}
-
-	public static ClientDao getInstance() {
-		if (instance == null) {
-			instance = new ClientDao();
-		}
-		return instance;
 	}
 
 	private static final String CREATE_CLIENT_QUERY = "INSERT INTO Client(nom, prenom, email, naissance) VALUES(?, ?, ?, ?);";

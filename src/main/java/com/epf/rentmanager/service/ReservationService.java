@@ -5,29 +5,21 @@ import com.epf.rentmanager.dao.ReservationDao;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Reservation;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
-
+@Service
 public class ReservationService {
+    @Autowired
     private ReservationDao reservationDao;
-    public static ReservationService instance;
 
     private ReservationService() {
-        this.reservationDao = ReservationDao.getInstance();
+        this.reservationDao = reservationDao;
     }
-
-    public static ReservationService getInstance() {
-        if (instance == null) {
-            instance = new ReservationService();
-        }
-
-        return instance;
-    }
-
 
     public long create(Reservation reservation) throws ServiceException {
         try {
-            return ReservationDao.getInstance().create(reservation);
+            return reservationDao.create(reservation);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException();
@@ -40,7 +32,7 @@ public class ReservationService {
 
         }
         try {
-            return ReservationDao.getInstance().findResaByClientId(id);
+            return reservationDao.findResaByClientId(id);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException();
@@ -55,7 +47,7 @@ public class ReservationService {
 
         }
         try {
-            return ReservationDao.getInstance().findResaByVehicleId(id);
+            return reservationDao.findResaByVehicleId(id);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ServiceException();
@@ -67,7 +59,7 @@ public class ReservationService {
 
     public List<Reservation> findAll() throws ServiceException {
         try {
-            return ReservationDao.getInstance().findAll();
+            return reservationDao.findAll();
 
         }  catch(DaoException e) {
             e.printStackTrace();
@@ -80,7 +72,7 @@ public class ReservationService {
 
 
         try {
-            return ReservationDao.getInstance().findAll().size();
+            return reservationDao.findAll().size();
         } catch (DaoException e) {
             e.printStackTrace();
             throw new DaoException();
