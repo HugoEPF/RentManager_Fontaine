@@ -41,6 +41,10 @@ public class Vehicle {
         this(0, "constructeur", 0);
     }
 
+    public static boolean isNbPlaces_TwoNine(Vehicle vehicle) {
+        return vehicle.nb_places >= 2 && vehicle.nb_places <= 9;
+    }
+
     @Override
     public String toString() {
         return "Vehicule{" +

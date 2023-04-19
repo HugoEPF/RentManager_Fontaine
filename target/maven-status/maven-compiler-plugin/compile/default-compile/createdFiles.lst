@@ -21,6 +21,7 @@ com/epf/rentmanager/model/Client.class
 com/epf/rentmanager/dao/ReservationDao.class
 com/epf/rentmanager/model/Vehicle.class
 com/epf/rentmanager/servlet/HomeServlet.class
+com/epf/rentmanager/servlet/DeleteUserServlet.class
 com/epf/rentmanager/model/WebConfiguration.class
 com/epf/rentmanager/persistence/FillDatabase.class
 com/epf/rentmanager/service/ReservationService.class

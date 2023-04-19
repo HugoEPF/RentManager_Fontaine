@@ -16,7 +16,7 @@ public class ClientDao {
 
 	//private static ClientDao instance = null;
 
-	private ClientDao() {
+	public ClientDao() {
 	}
 
 	private static final String CREATE_CLIENT_QUERY = "INSERT INTO Client(nom, prenom, email, naissance) VALUES(?, ?, ?, ?);";
@@ -51,9 +51,29 @@ public class ClientDao {
 
 
 
-	public long delete(Client client) throws DaoException, SQLException {
+	public long delete(int id) throws DaoException, SQLException {
+		try {
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement ps =
+					connection.prepareStatement(DELETE_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CLIENT_QUERY);
+			preparedStatement.setInt(1,id);
+			preparedStatement.executeUpdate();
 
-		return 0;
+			if(ps.executeUpdate() != 0) {
+				ps.close();
+				connection.close();
+				return 1;
+
+			} else {
+				ps.close();
+				connection.close();
+				return 0;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException();
+		}
 	}
 
 	public Client findById(long id) throws DaoException {

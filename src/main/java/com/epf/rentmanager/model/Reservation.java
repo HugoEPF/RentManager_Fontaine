@@ -1,6 +1,7 @@
 package com.epf.rentmanager.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Reservation {
     private long id;
@@ -61,6 +62,10 @@ public class Reservation {
         this.fin = fin;
     }
 
+    public static boolean isCarNotRentUnder7days(Reservation rent) {
+        Period period = Period.between(rent.getDebut(),rent.getFin());
+        return period.getDays() < 7;
+    }
     @Override
     public String toString() {
         return "Reservation{" +

@@ -39,6 +39,16 @@ public class ClientService {
 		}
 	}
 
+	public long delete(int id) throws ServiceException {
+		try {
+			return clientDao.delete(id);
+		} catch (DaoException | SQLException e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+
+	}
+
 	public Client findById(long id) throws ServiceException {
 		if(id<0) {
 			throw new ServiceException();
@@ -49,6 +59,7 @@ public class ClientService {
 		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new ServiceException();
+
 		}
 
 

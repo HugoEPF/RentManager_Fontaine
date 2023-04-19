@@ -7,6 +7,8 @@
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/persistence/FillDatabase.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/RentServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/CreateRentServlet.java
+/Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/model/WebConfiguration.java
+/Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/DeleteUserServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/CreateVehicleServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/persistence/ConnectionManager.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/dao/ReservationDao.java
@@ -17,6 +19,7 @@
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/CreateUserServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/utils/IOUtils.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/main/test.java
+/Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/model/AppConfiguration.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/model/Reservation.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/DetailsVehicleServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/model/Client.java

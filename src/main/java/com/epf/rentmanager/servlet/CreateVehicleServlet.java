@@ -48,14 +48,23 @@ public class CreateVehicleServlet extends HttpServlet {
         int nb_place = Integer.parseInt(request.getParameter("seats"));
         vehicle.setConstructeur(constructeur);
         vehicle.setNb_places(nb_place);
+        boolean nbPlaces = vehicle.isNbPlaces_TwoNine(vehicle);
         try {
-            vehicleService.create(vehicle);
+            if(nbPlaces == true) {
+                vehicleService.create(vehicle);
+                this.getServletContext()
+                        .getRequestDispatcher("/WEB-INF/views/vehicles/create.jsp")
+                        .forward(request, response);
+            }
+
+            if(nbPlaces == false) {
+                response.getWriter().write(" error nombre de places");
+            }
+
         }  catch (ServiceException e) {
             e.printStackTrace();
         }
-        this.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/vehicles/list.jsp")
-                .forward(request, response);
+
     }
 
 }

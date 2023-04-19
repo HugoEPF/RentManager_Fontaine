@@ -66,15 +66,24 @@ public class CreateRentServlet extends HttpServlet {
         rent.setVehicule_id(vehicle_id);
         rent.setDebut(debut);
         rent.setFin(fin);
+        boolean reservationLimit = rent.isCarNotRentUnder7days(rent);
 
         try {
-            reservationService.create(rent);
+            if(reservationLimit == true) {
+                reservationService.create(rent);
+                this.getServletContext()
+                        .getRequestDispatcher("/WEB-INF/views/rents/create.jsp")
+                        .forward(request, response);
+            }
+
+            if(reservationLimit == false) {
+                response.getWriter().write("error rent");
+            }
+
         }  catch (ServiceException e) {
             e.printStackTrace();
         }
-        this.getServletContext()
-                .getRequestDispatcher("/WEB-INF/views/rents/create.jsp")
-                .forward(request, response);
+
     }
 
 }

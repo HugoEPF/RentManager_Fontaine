@@ -13,9 +13,13 @@ public class test {
     public static void main(String[] args) {
         //System.out.println(new Client(12, "Hugo","Fontaine", "hugo.fontaine@epfedu.fr", LocalDate.now()));
 
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
-        ClientService clientService = context.getBean(ClientService.class);
-        VehicleService vehicleService = context.getBean(VehicleService.class);
+        //ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
+        //ClientService clientService = context.getBean(ClientService.class);
+        //VehicleService vehicleService = context.getBean(VehicleService.class);
+
+
+    Client client = new Client(12, "Hugo","Fontaine", "hugo.fontaine@epfedu.fr", LocalDate.of(2006,02,05));
+        System.out.println(client.isLegal(client));
 
 
     }

@@ -1,5 +1,9 @@
 package com.epf.rentmanager.model;
+import com.epf.rentmanager.dao.ClientDao;
+
 import java.time.LocalDate;
+import java.time.Period;
+
 public class Client {
     private long id;
     private String nom;
@@ -57,6 +61,21 @@ public class Client {
     public void setNaissance(LocalDate naissance) {
         this.naissance = naissance;
     }
+
+    public static boolean isLegal(Client client) {
+        LocalDate currentDate = LocalDate.now();
+        Period period = Period.between(client.getNaissance(), currentDate);
+        int age = period.getYears();
+        System.out.println(age);
+        return age >= 18;
+    }
+
+    public static boolean isNameNotLong(Client client) {
+        return client.getNom().length() >= 3 && client.getPrenom().length() >= 3;
+    }
+
+
+
 
     @Override
     public String toString() {

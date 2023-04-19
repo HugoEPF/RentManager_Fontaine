@@ -1,0 +1,15 @@
+-------------------------------------------------------------------------------
+Test set: epf.rentmanager.service.ClientServiceTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.705 s <<< FAILURE! - in epf.rentmanager.service.ClientServiceTest
+initializationError(epf.rentmanager.service.ClientServiceTest)  Time elapsed: 0.004 s  <<< ERROR!
+org.mockito.exceptions.base.MockitoException: 
+
+
+No tests found in ClientServiceTest
+Is the method annotated with @Test?
+Is the method public?
+
+Caused by: java.lang.reflect.InvocationTargetException
+Caused by: org.junit.runners.model.InitializationError
+
