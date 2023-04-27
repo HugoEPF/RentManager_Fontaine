@@ -20,14 +20,7 @@ public class ClientService {
 	private ClientService(ClientDao clientDao) {
 		this.clientDao = clientDao;
 	}
-	
-	//public static ClientService getInstance() {
-		//if (instance == null) {
-			//instance = new ClientService();
-		//}
-		
-		//return instance;
-	//}
+
 	
 	
 	public long create(Client client) throws ServiceException {
@@ -52,7 +45,6 @@ public class ClientService {
 	public Client findById(long id) throws ServiceException {
 		if(id<0) {
 			throw new ServiceException();
-
 		}
 		try {
 			return clientDao.findById(id);
@@ -72,6 +64,16 @@ public class ClientService {
 		}  catch(DaoException e) {
 			e.printStackTrace();
 			throw new ServiceException();
+		}
+
+	}
+
+	public Client findByEmail(String mail) throws DaoException {
+		try {
+			return clientDao.findByEmail(mail);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 
 	}

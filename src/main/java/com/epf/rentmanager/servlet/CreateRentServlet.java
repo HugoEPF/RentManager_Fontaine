@@ -13,6 +13,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,6 +36,7 @@ public class CreateRentServlet extends HttpServlet {
      ReservationService reservationService;
 
 
+    @Override
     public void init() throws ServletException{
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
@@ -55,6 +57,7 @@ public class CreateRentServlet extends HttpServlet {
 
     }
 
+
     protected void doPost(HttpServletRequest   request,   HttpServletResponse response)
             throws ServletException,  IOException {
         Reservation rent = new Reservation();
@@ -67,9 +70,15 @@ public class CreateRentServlet extends HttpServlet {
         rent.setDebut(debut);
         rent.setFin(fin);
         boolean reservationLimit = rent.isCarNotRentUnder7days(rent);
+        boolean reservationDate = false;
+        try {
+            reservationDate = rent.isNotTheSameDay(rent, reservationService);
+        }  catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
 
         try {
-            if(reservationLimit == true) {
+            if(reservationLimit == true && reservationDate == true) {
                 reservationService.create(rent);
                 this.getServletContext()
                         .getRequestDispatcher("/WEB-INF/views/rents/create.jsp")
@@ -78,6 +87,9 @@ public class CreateRentServlet extends HttpServlet {
 
             if(reservationLimit == false) {
                 response.getWriter().write("error rent");
+            }
+            if(reservationDate == false) {
+                response.getWriter().write("error Voiture déja réservé ce jour");
             }
 
         }  catch (ServiceException e) {

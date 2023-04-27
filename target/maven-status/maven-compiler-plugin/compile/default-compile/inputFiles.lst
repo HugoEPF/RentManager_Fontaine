@@ -1,5 +1,6 @@
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/VoitureServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/service/ReservationService.java
+/Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/DeleteReservationServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/exception/DaoException.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/UsersServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/HomeServlet.java
@@ -13,13 +14,14 @@
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/persistence/ConnectionManager.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/dao/ReservationDao.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/dao/VehicleDao.java
-/Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/DetailsUserServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/dao/ClientDao.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/model/Vehicle.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/CreateUserServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/utils/IOUtils.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/main/test.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/model/AppConfiguration.java
+/Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/DeleteVehicleServlet.java
+/Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/DetailsUsersServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/model/Reservation.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/DetailsVehicleServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/model/Client.java

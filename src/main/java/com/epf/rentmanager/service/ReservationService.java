@@ -7,6 +7,9 @@ import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 @Service
 public class ReservationService {
@@ -68,6 +71,16 @@ public class ReservationService {
 
     }
 
+
+    public long delete(int id) throws ServiceException {
+        try {
+            return reservationDao.delete(id);
+        } catch (DaoException | SQLException e) {
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+
+    }
     public int count() throws DaoException {
 
 

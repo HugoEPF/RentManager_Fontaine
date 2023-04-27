@@ -1,5 +1,6 @@
 package com.epf.rentmanager.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.epf.rentmanager.dao.ClientDao;
@@ -47,6 +48,21 @@ public class VehicleService {
 
 	}
 
+	public List<Vehicle> findByClientId(long client_id) throws ServiceException {
+		if(client_id<0) {
+			throw new ServiceException();
+
+		}
+		try {
+			return vehicleDao.findByClientId(client_id);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+
+
+	}
+
 	public List<Vehicle> findAll() throws ServiceException {
 		try {
 			return vehicleDao.findAll();
@@ -55,6 +71,16 @@ public class VehicleService {
 			throw new ServiceException();
 		}
 
+
+	}
+
+	public long delete(int id) throws ServiceException {
+		try {
+			return vehicleDao.delete(id);
+		} catch (DaoException | SQLException e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
 
 	}
 

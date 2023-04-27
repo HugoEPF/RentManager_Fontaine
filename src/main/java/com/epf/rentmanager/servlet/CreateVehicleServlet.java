@@ -52,9 +52,7 @@ public class CreateVehicleServlet extends HttpServlet {
         try {
             if(nbPlaces == true) {
                 vehicleService.create(vehicle);
-                this.getServletContext()
-                        .getRequestDispatcher("/WEB-INF/views/vehicles/create.jsp")
-                        .forward(request, response);
+                response.sendRedirect("../cars");
             }
 
             if(nbPlaces == false) {

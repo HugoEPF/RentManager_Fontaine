@@ -1,5 +1,8 @@
 package com.epf.rentmanager.model;
 import com.epf.rentmanager.dao.ClientDao;
+import com.epf.rentmanager.exception.DaoException;
+import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.service.ClientService;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -74,6 +77,14 @@ public class Client {
         return client.getNom().length() >= 3 && client.getPrenom().length() >= 3;
     }
 
+    public static boolean isMailTheSame(Client client, ClientService clientService) throws DaoException {
+        boolean mailIdentique = true;
+        Client clientMail = clientService.findByEmail(client.getEmail());
+        if (clientMail != null && client.getEmail() == clientMail.getEmail()) { // Si identique
+            mailIdentique = false;
+        }
+        return mailIdentique;
+   }
 
 
 

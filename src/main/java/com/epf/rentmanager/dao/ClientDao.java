@@ -23,6 +23,7 @@ public class ClientDao {
 	private static final String DELETE_CLIENT_QUERY = "DELETE FROM Client WHERE id=?;";
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
+	private static final String FIND_CLIENTS_MAIL = "SELECT id, nom, prenom, email, naissance FROM Client WHERE email=?;";
 
 	public long create(Client client) throws DaoException {
 		try {
@@ -55,10 +56,9 @@ public class ClientDao {
 		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement ps =
-					connection.prepareStatement(DELETE_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS);
-			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CLIENT_QUERY);
-			preparedStatement.setInt(1,id);
-			preparedStatement.executeUpdate();
+					connection.prepareStatement(DELETE_CLIENT_QUERY);
+			ps.setInt(1,id);
+			ps.executeUpdate();
 
 			if(ps.executeUpdate() != 0) {
 				ps.close();
@@ -93,6 +93,37 @@ public class ClientDao {
 			e.printStackTrace();
 			throw new DaoException();
 		}
+	}
+
+	public Client findByEmail(String email) throws DaoException {
+		// Connexion à la base de données
+		try {
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement ps = connection.prepareStatement(FIND_CLIENTS_MAIL);
+			ps.setString(1, email);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				int id = rs.getInt("id");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				LocalDate date = rs.getDate("naissance").toLocalDate();
+				ps.close();
+				connection.close();
+				return new Client(id, nom, prenom, email, date);
+			}
+		else{
+			ps.close();
+			connection.close();
+			return null;
+		}
+
+	} catch (SQLException e) {
+		e.printStackTrace();
+		throw new DaoException();
+
+	}
+
 	}
 
 	public List<Client> findAll() throws DaoException {

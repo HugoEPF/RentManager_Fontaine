@@ -1,5 +1,6 @@
 package com.epf.rentmanager.servlet;
 
+import com.epf.rentmanager.dao.ClientDao;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
@@ -31,6 +32,7 @@ public class CreateUserServlet extends HttpServlet {
     @Autowired
      ClientService clientService;
 
+
     public void init() throws ServletException{
         super.init();
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
@@ -59,15 +61,22 @@ public class CreateUserServlet extends HttpServlet {
         boolean ageLegal = client.isLegal(client);
         boolean nameCharacter = client.isNameNotLong(client);
 
+
+        boolean mailUser = false;
+        try {
+            mailUser = client.isMailTheSame(client, clientService);
+            System.out.println(mailUser);
+        } catch (DaoException e) {
+            throw new RuntimeException(e);
+        }
+
+
         try {
 
-
-            if(ageLegal == true  && nameCharacter == true) {
+            if(ageLegal == true  && nameCharacter == true && mailUser == true) { //&& mail == true) {
 
                 clientService.create(client);
-                this.getServletContext()
-                        .getRequestDispatcher("/WEB-INF/views/users/create.jsp")
-                        .forward(request, response);
+                response.sendRedirect("../users");
 
             } if(ageLegal == false){
 
@@ -76,9 +85,10 @@ public class CreateUserServlet extends HttpServlet {
                response.getWriter().write("error age");
 
             } if(nameCharacter == false){
-                //JOptionPane.showMessageDialog(null, "Erreur age", "Info", JOptionPane.INFORMATION_MESSAGE);
                 response.getWriter().write(" error caractère");
 
+            } if(mailUser == false) {
+                response.getWriter().write(" error mail deja dans la base");
             }
 
         }  catch (ServiceException e) {
