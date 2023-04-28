@@ -20,7 +20,7 @@ public class DeleteVehicleServlet extends HttpServlet {
      */
     private static final long serialVersionUID = 1L;
     @Autowired
-    VehicleService vehicleService;
+    private VehicleService vehicleService;
 
     public void init() throws ServletException {
         super.init();

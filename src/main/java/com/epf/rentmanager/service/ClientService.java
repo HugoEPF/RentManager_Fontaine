@@ -21,8 +21,12 @@ public class ClientService {
 		this.clientDao = clientDao;
 	}
 
-	
-	
+	/**
+	 * Permets de créer un client
+	 * @param client
+	 * @return
+	 * @throws DaoException
+	 */
 	public long create(Client client) throws ServiceException {
 		try {
 			return clientDao.create(client);
@@ -31,7 +35,12 @@ public class ClientService {
 			throw new ServiceException();
 		}
 	}
-
+	/**
+	 * Permets de supprimer un client
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public long delete(int id) throws ServiceException {
 		try {
 			return clientDao.delete(id);
@@ -41,7 +50,12 @@ public class ClientService {
 		}
 
 	}
-
+	/**
+	 * Permets de trouver un client
+	 * @param id
+	 * @return un client
+	 * @throws DaoException
+	 */
 	public Client findById(long id) throws ServiceException {
 		if(id<0) {
 			throw new ServiceException();
@@ -56,7 +70,12 @@ public class ClientService {
 
 
 	}
-
+	/**
+	 * Permets de trouver tous les clients
+	 * @param
+	 * @return une liste de clients
+	 * @throws DaoException
+	 */
 	public List<Client> findAll() throws ServiceException {
 		try {
 			return clientDao.findAll();
@@ -67,7 +86,12 @@ public class ClientService {
 		}
 
 	}
-
+	/**
+	 * Permets de trouver un client grâce à son email
+	 * @param mail
+	 * @return un client
+	 * @throws DaoException
+	 */
 	public Client findByEmail(String mail) throws DaoException {
 		try {
 			return clientDao.findByEmail(mail);
@@ -77,7 +101,12 @@ public class ClientService {
 		}
 
 	}
-
+	/**
+	 * Permets de modifier un client
+	 * @param client
+	 * @return
+	 * @throws DaoException
+	 */
 	public void edit(Client client) throws DaoException {
 		try {
 			clientDao.edit(client);
@@ -87,7 +116,12 @@ public class ClientService {
 		}
 
 	}
-
+	/**
+	 * Permets de trouver des clients grâce à leur véhicule
+	 * @param vehicle_id
+	 * @return une liste de clients
+	 * @throws DaoException
+	 */
 	public List<Client> findByVehicleId(long vehicle_id) {
 		try {
 			return clientDao.findByVehicleId(vehicle_id);
@@ -96,7 +130,12 @@ public class ClientService {
 			throw new RuntimeException(e);
 		}
 	}
-
+	/**
+	 * Permets de trouver des clients grâce à leur réservation
+	 * @param rent_id
+	 * @return une liste de clients
+	 * @throws DaoException
+	 */
 	public List<Client> findByReservationClient(long rent_id) {
 		try {
 			return clientDao.findByReservationClient(rent_id);
@@ -105,7 +144,12 @@ public class ClientService {
 			throw new RuntimeException(e);
 		}
 	}
-
+	/**
+	 * Permets de compter le nombre de clients
+	 * @param
+	 * @return un nombre
+	 * @throws DaoException
+	 */
 	public int count() throws DaoException {
 
 

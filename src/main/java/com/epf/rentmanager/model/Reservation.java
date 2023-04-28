@@ -66,12 +66,22 @@ public class Reservation {
     public void setFin(LocalDate fin) {
         this.fin = fin;
     }
-
+    /**
+     * Permets de vérifier si le véhicule n'est pas réservé plus de 7 jours de suite
+     * @param rent
+     * @return boolean
+     * @throws DaoException
+     */
     public static boolean isCarNotRentUnder7days(Reservation rent) {
         Period period = Period.between(rent.getDebut(),rent.getFin());
         return period.getDays() < 7;
     }
-
+    /**
+     * Permets de vérifier si un client ne réserve pas les mêmes dates pour un véhicule
+     * @param rent
+     * @return boolean
+     * @throws DaoException
+     */
     public static boolean isNotTheSameDay(Reservation rent, ReservationService rentService) throws ServiceException {
         List<Reservation> reservation;
         reservation = rentService.findByResaByVehicleId(rent.vehicule_id);

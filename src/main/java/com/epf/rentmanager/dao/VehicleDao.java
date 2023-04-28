@@ -27,11 +27,17 @@ public class VehicleDao {
 	private static final String FIND_VEHICLES_BY_CLIENT = "SELECT * FROM Vehicle INNER JOIN Reservation ON Reservation.vehicle_id=Vehicle.id WHERE Reservation.client_id=?;";
 	private static final String FIND_VEHICLE_BY_RENT= "SELECT * FROM Vehicle INNER JOIN Reservation ON Reservation.vehicle_id=Vehicle.id WHERE Reservation.id=?;";
 	private static final String EDIT_VEHICLE = "UPDATE Vehicle SET constructeur=?, nb_places=? WHERE id=?;";
+	/**
+	 * Permets de créer un véhicule
+	 * @param vehicle
+	 * @return
+	 * @throws DaoException
+	 */
 	public long create(Vehicle vehicle) throws DaoException {
-		try {
-			Connection connection = ConnectionManager.getConnection();
+		try(Connection connection = ConnectionManager.getConnection();
 			PreparedStatement ps =
-					connection.prepareStatement(CREATE_VEHICLE_QUERY, Statement.RETURN_GENERATED_KEYS);
+					connection.prepareStatement(CREATE_VEHICLE_QUERY, Statement.RETURN_GENERATED_KEYS)) {
+
 			ps.setString(1, vehicle.getConstructeur());
 			ps.setInt(2, vehicle.getNb_places());
 			ps.execute();
@@ -40,8 +46,6 @@ public class VehicleDao {
 			if (resultset.next()) {
 				id = resultset.getInt(1);
 			}
-			ps.close();
-			connection.close();
 			return id;
 		} catch (SQLException ex) {
 
@@ -49,19 +53,21 @@ public class VehicleDao {
 		}
 
 	}
-
+	/**
+	 * Permets de modifier un véhicule
+	 * @param vehicle
+	 * @return
+	 * @throws DaoException
+	 */
 	public void edit(Vehicle vehicle) throws DaoException {
-		try {
-			Connection connection = ConnectionManager.getConnection();
+		try(Connection connection = ConnectionManager.getConnection();
 			PreparedStatement ps =
-					connection.prepareStatement(EDIT_VEHICLE);
+					connection.prepareStatement(EDIT_VEHICLE)) {
 
 			ps.setString(1, vehicle.getConstructeur());
 			ps.setInt(2, vehicle.getNb_places());
 			ps.setLong(3,vehicle.getId());
 			ps.executeUpdate();
-			ps.close();
-			connection.close();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
@@ -69,56 +75,58 @@ public class VehicleDao {
 		}
 
 	}
-
+	/**
+	 * Permets de supprimer un véhicule
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public long delete(int id) throws DaoException, SQLException {
-		try {
-			Connection connection = ConnectionManager.getConnection();
+		try(Connection connection = ConnectionManager.getConnection();
 			PreparedStatement ps =
-					connection.prepareStatement(DELETE_VEHICLE_QUERY);
+					connection.prepareStatement(DELETE_VEHICLE_QUERY)) {
+
 			ps.setInt(1,id);
-			ps.executeUpdate();
-
-			if(ps.executeUpdate() != 0) {
-				ps.close();
-				connection.close();
-				return 1;
-
-			} else {
-				ps.close();
-				connection.close();
-				return 0;
-			}
+			return ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException();
 		}
 	}
-
+	/**
+	 * Permets de trouver un véhicule par rapport à son id
+	 * @param id
+	 * @return un véhicule
+	 * @throws DaoException
+	 */
 	public Vehicle findById(long id) throws DaoException {
 
-		try {
-			Connection connection = ConnectionManager.getConnection();
-			PreparedStatement pstatement = connection.prepareStatement(FIND_VEHICLE_QUERY);
+		try(Connection connection = ConnectionManager.getConnection();
+			PreparedStatement pstatement = connection.prepareStatement(FIND_VEHICLE_QUERY)) {
+
 			pstatement.setLong(1,id);
 			ResultSet rs = pstatement.executeQuery();
 			rs.next();
 			String constructeur = rs.getString("constructeur");
 			int nb_places = rs.getInt("nb_places");
-
 			return new Vehicle((int) id, constructeur, nb_places);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException();
 		}
 	}
-
+	/**
+	 * Permets de récupérer tous les véhicules
+	 * @param
+	 * @return une liste de véhicule
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findAll() throws DaoException {
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
-		try {
-			Connection connection = ConnectionManager.getConnection();
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(FIND_VEHICLES_QUERY);
+		try(Connection connection = ConnectionManager.getConnection();
+			Statement statement = connection.createStatement()) {
 
+			ResultSet rs = statement.executeQuery(FIND_VEHICLES_QUERY);
 			while(rs.next()) {
 				int id = rs.getInt("id");
 				String constructeur = rs.getString("constructeur");
@@ -132,7 +140,12 @@ public class VehicleDao {
 		return vehicles;
 		
 	}
-
+	/**
+	 * Permets de récupérer les véhicules par rapport aux clients id dans la réservation
+	 * @param
+	 * @return une liste de véhicule
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findByClientId(long client_id) throws DaoException {
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
 		try (
@@ -153,7 +166,12 @@ public class VehicleDao {
 		}
 		return vehicles;
 	}
-
+	/**
+	 * Permets de récupérer les véhicules dans les réservations
+	 * @param
+	 * @return une liste de véhicule
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findByReservationVehicle(long rent_id) throws DaoException {
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
 		try (

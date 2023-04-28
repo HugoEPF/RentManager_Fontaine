@@ -28,12 +28,12 @@ public class CreateRentServlet extends HttpServlet {
      *
      */
     private static final long serialVersionUID = 1L;
+     @Autowired
+     private VehicleService vehicleService;
     @Autowired
-     VehicleService vehicleService;
+    private ClientService clientService;
     @Autowired
-     ClientService clientService;
-    @Autowired
-     ReservationService reservationService;
+    private ReservationService reservationService;
 
 
     @Override
@@ -80,16 +80,14 @@ public class CreateRentServlet extends HttpServlet {
         try {
             if(reservationLimit == true && reservationDate == true) {
                 reservationService.create(rent);
-                this.getServletContext()
-                        .getRequestDispatcher("/WEB-INF/views/rents/create.jsp")
-                        .forward(request, response);
+                response.sendRedirect("../rents");
             }
 
             if(reservationLimit == false) {
-                response.getWriter().write("error rent");
+                response.getWriter().write("Erreur : réservation dépasse 7 jours\n");
             }
             if(reservationDate == false) {
-                response.getWriter().write("error Voiture déja réservé ce jour");
+                response.getWriter().write("Erreur : dates deja prises\n");
             }
 
         }  catch (ServiceException e) {

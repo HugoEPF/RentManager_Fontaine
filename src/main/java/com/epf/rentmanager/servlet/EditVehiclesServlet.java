@@ -19,7 +19,7 @@ import java.io.IOException;
 public class EditVehiclesServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @Autowired
-    VehicleService vehicleService;
+    private VehicleService vehicleService;
 
 
     public void init() throws ServletException {
@@ -60,7 +60,7 @@ public class EditVehiclesServlet extends HttpServlet {
                 vehicleService.edit(vehicle);
                 response.sendRedirect("../cars");
             } if(nbPlaces == false) {
-                response.getWriter().write(" error nombre de places");
+                response.getWriter().write("Erreur : nombre de places du véhicules incorrecte\n");
             }
 
         } catch (ServiceException e) {

@@ -64,7 +64,12 @@ public class Client {
     public void setNaissance(LocalDate naissance) {
         this.naissance = naissance;
     }
-
+    /**
+     * Permets de vérifier si un client a plus de 18 ans
+     * @param client
+     * @return boolean
+     * @throws DaoException
+     */
     public static boolean isLegal(Client client) {
         LocalDate currentDate = LocalDate.now();
         Period period = Period.between(client.getNaissance(), currentDate);
@@ -72,15 +77,25 @@ public class Client {
         System.out.println(age);
         return age >= 18;
     }
-
+    /**
+     * Permets de vérifier si le nom/prenom du client ne fait pas moins de trois caractères
+     * @param client
+     * @return boolean
+     * @throws DaoException
+     */
     public static boolean isNameNotLong(Client client) {
         return client.getNom().length() >= 3 && client.getPrenom().length() >= 3;
     }
-
+    /**
+     * Permets de vérifier si le mail entrée n'est pas le même que dans la base
+     * @param client
+     * @return boolean
+     * @throws DaoException
+     */
     public static boolean isMailTheSame(Client client, ClientService clientService) throws DaoException {
         boolean mailIdentique = true;
         Client clientMail = clientService.findByEmail(client.getEmail());
-        if (clientMail != null && client.getEmail() == clientMail.getEmail()) { // Si identique
+        if (clientMail != null && client.getEmail() == clientMail.getEmail()) {
             mailIdentique = false;
         }
         return mailIdentique;

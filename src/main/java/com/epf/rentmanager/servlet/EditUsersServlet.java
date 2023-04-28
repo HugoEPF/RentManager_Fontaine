@@ -21,7 +21,7 @@ public class EditUsersServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     @Autowired
-    ClientService clientService;
+    private ClientService clientService;
 
 
     public void init() throws ServletException {
@@ -61,22 +61,17 @@ public class EditUsersServlet extends HttpServlet {
         client.setNaissance(naissance);
         boolean ageLegal = client.isLegal(client);
         boolean nameCharacter = client.isNameNotLong(client);
-        boolean mailUser = false;
-        try {
-            mailUser = client.isMailTheSame(client, clientService);
-        } catch (DaoException e) {
-            throw new RuntimeException(e);
-        }
+
 
         try {
             if(ageLegal == true  && nameCharacter == true) {
                 clientService.edit(client);
                 response.sendRedirect("../users");
             } if(ageLegal == false){
-                response.getWriter().write("error age");
+                response.getWriter().write("Erreur : vous êtes mineur\n");
 
             } if(nameCharacter == false){
-                response.getWriter().write(" error caractère");
+                response.getWriter().write("Erreur : Nom/Prénom faisant moins de 3 caractères\n");
 
             }
 

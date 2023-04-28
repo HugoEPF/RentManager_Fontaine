@@ -22,11 +22,11 @@ import java.util.List;
 public class EditRentServlet extends HttpServlet{
     private static final long serialVersionUID = 1L;
     @Autowired
-    ClientService clientService;
+    private ClientService clientService;
     @Autowired
-    VehicleService vehicleService;
+    private VehicleService vehicleService;
     @Autowired
-    ReservationService reservationService;
+    private ReservationService reservationService;
 
     public void init() throws ServletException {
         super.init();
@@ -45,7 +45,6 @@ public class EditRentServlet extends HttpServlet{
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
-        //request.setAttribute("clients", clients);
 
         this.getServletContext()
                 .getRequestDispatcher("/WEB-INF/views/rents/edit.jsp")
@@ -67,23 +66,16 @@ public class EditRentServlet extends HttpServlet{
         rent.setDebut(debut);
         rent.setFin(fin);
         boolean reservationLimit = rent.isCarNotRentUnder7days(rent);
-        boolean reservationDate = false;
+
         try {
-            reservationDate = rent.isNotTheSameDay(rent, reservationService);
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            if(reservationLimit == true && reservationDate == true) {
+            if(reservationLimit == true) {
                 reservationService.edit(rent);
                 response.sendRedirect("../rents");
             }
             if(reservationLimit == false) {
-                response.getWriter().write("error rent");
+                response.getWriter().write("Erreur : réservation dépasse 7 jours\n");
             }
-            if(reservationDate == false) {
-                response.getWriter().write("error Voiture déja réservé ce jour");
-            }
+
 
         } catch (ServiceException e) {
             throw new RuntimeException(e);

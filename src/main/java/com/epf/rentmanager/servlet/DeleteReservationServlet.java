@@ -20,7 +20,7 @@ public class DeleteReservationServlet extends HttpServlet {
      */
     private static final long serialVersionUID = 1L;
     @Autowired
-    ReservationService reservationService;
+    private ReservationService reservationService;
 
     public void init() throws ServletException {
         super.init();

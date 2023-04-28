@@ -25,11 +25,11 @@ public class RentServlet extends HttpServlet {
      */
     private static final long serialVersionUID = 1L;
     @Autowired
-     ReservationService reservationService;
+    private ReservationService reservationService;
     @Autowired
-     ClientService clientService;
+    private ClientService clientService;
     @Autowired
-    VehicleService vehicleService;
+    private VehicleService vehicleService;
 
     public void init() throws ServletException{
         super.init();

@@ -19,7 +19,12 @@ public class ReservationService {
     private ReservationService() {
         this.reservationDao = reservationDao;
     }
-
+    /**
+     * Permets de créer une réservation
+     * @param reservation
+     * @return
+     * @throws DaoException
+     */
     public long create(Reservation reservation) throws ServiceException {
         try {
             return reservationDao.create(reservation);
@@ -28,7 +33,12 @@ public class ReservationService {
             throw new ServiceException();
         }
     }
-
+    /**
+     * Permets de trouver des réservations par rapport aux clients
+     * @param id
+     * @return liste de réservation
+     * @throws DaoException
+     */
     public List<Reservation> findByResaByClientId(long id) throws ServiceException {
         if(id<0) {
             throw new ServiceException();
@@ -43,7 +53,12 @@ public class ReservationService {
 
 
     }
-
+    /**
+     * Permets de trouver des réservations par rapport aux véhicules
+     * @param id
+     * @return liste de réservation
+     * @throws DaoException
+     */
     public List<Reservation> findByResaByVehicleId(long id) throws ServiceException {
         if(id<0) {
             throw new ServiceException();
@@ -59,7 +74,12 @@ public class ReservationService {
 
     }
 
-
+    /**
+     * Permets de trouver toutes les réservations
+     * @param
+     * @return liste de réservation
+     * @throws DaoException
+     */
     public List<Reservation> findAll() throws ServiceException {
         try {
             return reservationDao.findAll();
@@ -71,7 +91,12 @@ public class ReservationService {
 
     }
 
-
+    /**
+     * Permets de supprimer une réservation
+     * @param id
+     * @return
+     * @throws DaoException
+     */
     public long delete(int id) throws ServiceException {
         try {
             return reservationDao.delete(id);
@@ -81,7 +106,12 @@ public class ReservationService {
         }
 
     }
-
+    /**
+     * Permets de modifier une réservation
+     * @param reservation
+     * @return liste de réservation
+     * @throws DaoException
+     */
     public void edit(Reservation reservation) throws ServiceException {
         try {
             reservationDao.edit(reservation);
@@ -91,7 +121,12 @@ public class ReservationService {
         }
 
     }
-
+    /**
+     * Permets de trouver une réservation
+     * @param rent_id
+     * @return une réservation
+     * @throws DaoException
+     */
     public Reservation findResaById(int rent_id) throws ServiceException {
         try {
             return reservationDao.findResaById(rent_id);
@@ -101,6 +136,12 @@ public class ReservationService {
         }
 
     }
+    /**
+     * Permets de compter le nombre de réservations
+     * @param
+     * @return un nombre
+     * @throws DaoException
+     */
     public int count() throws DaoException {
 
 

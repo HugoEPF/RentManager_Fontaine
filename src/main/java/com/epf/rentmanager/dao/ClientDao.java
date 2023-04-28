@@ -28,12 +28,16 @@ public class ClientDao {
 	private static final String FIND_CLIENT_BY_VEHICLES= "SELECT * FROM Client INNER JOIN Reservation ON Reservation.client_id=Client.id WHERE Reservation.vehicle_id=?;";
 	private static final String FIND_CLIENT_BY_RENT= "SELECT * FROM Client INNER JOIN Reservation ON Reservation.client_id=Client.id WHERE Reservation.id=?;";
 	private static final String EDIT_CLIENT = "UPDATE Client SET nom=?, prenom=?, email=?, naissance=? WHERE id=?;";
-	public long create(Client client) throws DaoException {
-		try {
-			Connection connection = ConnectionManager.getConnection();
-			PreparedStatement ps =
-					connection.prepareStatement(CREATE_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS);
 
+	/**
+	 * Permets de creer un client
+	 * @param client
+	 * @return
+	 * @throws DaoException
+	 */
+	public long create(Client client) throws DaoException {
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement ps = connection.prepareStatement(CREATE_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS)){
 			ps.setString(1, client.getNom());
 			ps.setString(2, client.getPrenom());
 			ps.setString(3, client.getEmail());
@@ -44,20 +48,23 @@ public class ClientDao {
 			if (resultset.next()) {
 				id = resultset.getInt(1);
 			}
-			ps.close();
-			connection.close();
 			return id;
 		} catch (SQLException ex) {
 			throw new RuntimeException(ex);
 		}
 
 	}
-
+	/**
+	 * Permets de modifier les informations du client
+	 * @param client
+	 * @return
+	 * @throws DaoException
+	 */
 	public void edit(Client client) throws DaoException {
-		try {
-			Connection connection = ConnectionManager.getConnection();
+		try(Connection connection = ConnectionManager.getConnection();
 			PreparedStatement ps =
-					connection.prepareStatement(EDIT_CLIENT);
+					connection.prepareStatement(EDIT_CLIENT)) {
+
 
 			ps.setString(1, client.getNom());
 			ps.setString(2, client.getPrenom());
@@ -65,8 +72,7 @@ public class ClientDao {
 			ps.setDate(4, Date.valueOf(client.getNaissance()));
 			ps.setLong(5,client.getId());
 			ps.executeUpdate();
-			ps.close();
-			connection.close();
+
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
@@ -77,38 +83,35 @@ public class ClientDao {
 
 
 
-	public long delete(int id) throws DaoException, SQLException {
-		try {
-			Connection connection = ConnectionManager.getConnection();
+	/**
+	 * Permets de supprimer un client
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */public long delete(int id) throws DaoException, SQLException {
+		try(Connection connection = ConnectionManager.getConnection();
 			PreparedStatement ps =
-					connection.prepareStatement(DELETE_CLIENT_QUERY);
+					connection.prepareStatement(DELETE_CLIENT_QUERY)) {
 			ps.setInt(1,id);
-			ps.executeUpdate();
+			return ps.executeUpdate();
 
-			if(ps.executeUpdate() != 0) {
-				ps.close();
-				connection.close();
-				return 1;
-
-			} else {
-				ps.close();
-				connection.close();
-				return 0;
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException();
 		}
 	}
-
+	/**
+	 * Permets de trouver un client par son id
+	 * @param id
+	 * @return le client recherché
+	 * @throws DaoException
+	 */
 	public Client findById(long id) throws DaoException {
-		try {
-			Connection connection = ConnectionManager.getConnection();
-			PreparedStatement pstatement = connection.prepareStatement(FIND_CLIENT_QUERY);
+		try(Connection connection = ConnectionManager.getConnection();
+			PreparedStatement pstatement = connection.prepareStatement(FIND_CLIENT_QUERY)) {
 			pstatement.setLong(1,id);
 			ResultSet rs = pstatement.executeQuery();
 			rs.next();
-
 			String nom = rs.getString("nom");
 			String prenom = rs.getString("prenom");
 			String email = rs.getString("email");
@@ -119,12 +122,16 @@ public class ClientDao {
 			throw new DaoException();
 		}
 	}
-
+	/**
+	 * Permets de trouver un client par son mail
+	 * @param email
+	 * @return le client avec l'email associé
+	 * @throws DaoException
+	 */
 	public Client findByEmail(String email) throws DaoException {
 		// Connexion à la base de données
-		try {
-			Connection connection = ConnectionManager.getConnection();
-			PreparedStatement ps = connection.prepareStatement(FIND_CLIENTS_MAIL);
+		try(Connection connection = ConnectionManager.getConnection();
+			PreparedStatement ps = connection.prepareStatement(FIND_CLIENTS_MAIL)) {
 			ps.setString(1, email);
 			ResultSet rs = ps.executeQuery();
 
@@ -133,8 +140,6 @@ public class ClientDao {
 				String nom = rs.getString("nom");
 				String prenom = rs.getString("prenom");
 				LocalDate date = rs.getDate("naissance").toLocalDate();
-				ps.close();
-				connection.close();
 				return new Client(id, nom, prenom, email, date);
 			}
 		else{
@@ -150,12 +155,16 @@ public class ClientDao {
 	}
 
 	}
-
+	/**
+	 * Permets de trouver tous les clients
+	 * @param
+	 * @return tous les clients de base
+	 * @throws DaoException
+	 */
 	public List<Client> findAll() throws DaoException {
 		List<Client> clients = new ArrayList<Client>();
-		try {
-			Connection connection = ConnectionManager.getConnection();
-			Statement statement = connection.createStatement();
+		try(Connection connection = ConnectionManager.getConnection();
+			Statement statement = connection.createStatement()) {
 			ResultSet rs = statement.executeQuery(FIND_CLIENTS_QUERY);
 			while(rs.next()) {
 				int id = rs.getInt("id");
@@ -171,13 +180,17 @@ public class ClientDao {
 
 		return clients;
 	}
-
+	/**
+	 * Permets de trouver un client par le vehicule associé dans la réservation recherché
+	 * @param vehicle_id
+	 * @return un client
+	 * @throws DaoException
+	 */
 	public List<Client> findByVehicleId(long vehicle_id) throws DaoException {
 		List<Client> clients = new ArrayList<Client>();
-		try (
-				Connection connection = ConnectionManager.getConnection();
-				PreparedStatement pstatement = connection.prepareStatement(FIND_CLIENT_BY_VEHICLES);
-		) {
+		try(Connection connection = ConnectionManager.getConnection();
+			PreparedStatement pstatement = connection.prepareStatement(FIND_CLIENT_BY_VEHICLES))
+		 {
 			pstatement.setLong(1, vehicle_id);
 			ResultSet resultSet = pstatement.executeQuery();
 			while(resultSet.next())
@@ -192,12 +205,17 @@ public class ClientDao {
 		}
 		return clients;
 	}
-
+	/**
+	 * Permets de trouver un client dans la réservation recherché
+	 * @param rent_id
+	 * @return un client
+	 * @throws DaoException
+	 */
 	public List<Client> findByReservationClient(long rent_id) throws DaoException {
 		List<Client> clients = new ArrayList<Client>();
 		try (
 				Connection connection = ConnectionManager.getConnection();
-				PreparedStatement pstatement = connection.prepareStatement(FIND_CLIENT_BY_RENT);
+				PreparedStatement pstatement = connection.prepareStatement(FIND_CLIENT_BY_RENT)
 		) {
 			pstatement.setLong(1, rent_id);
 			ResultSet resultSet = pstatement.executeQuery();

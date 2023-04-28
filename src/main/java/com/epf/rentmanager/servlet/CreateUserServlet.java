@@ -30,7 +30,7 @@ public class CreateUserServlet extends HttpServlet {
      */
     private static final long serialVersionUID = 1L;
     @Autowired
-     ClientService clientService;
+     private ClientService clientService;
 
 
     public void init() throws ServletException{
@@ -78,13 +78,13 @@ public class CreateUserServlet extends HttpServlet {
                 response.sendRedirect("../users");
 
             } if(ageLegal == false){
-               response.getWriter().write("error age");
+               response.getWriter().write("Erreur : vous êtes mineur\n");
 
             } if(nameCharacter == false){
-                response.getWriter().write(" error caractère");
+                response.getWriter().write("Erreur : Nom/Prénom faisant moins de 3 caractères\n");
 
             } if(mailUser == false) {
-                response.getWriter().write(" error mail deja dans la base");
+                response.getWriter().write("Erreur : Nom/Prénom faisant moins de 3 caractères\n");
             }
 
         }  catch (ServiceException e) {

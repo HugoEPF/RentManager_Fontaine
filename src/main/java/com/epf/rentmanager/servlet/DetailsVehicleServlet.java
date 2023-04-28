@@ -23,11 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/vehicles/details")
 public class DetailsVehicleServlet extends HttpServlet {
     @Autowired
-     VehicleService vehicleService;
+     private VehicleService vehicleService;
     @Autowired
-    ReservationService reservationService;
+    private ReservationService reservationService;
     @Autowired
-    ClientService clientService;
+    private ClientService clientService;
     private static final long serialVersionUID = 1L;
     public void init() throws ServletException {
         super.init();
@@ -50,7 +50,6 @@ public class DetailsVehicleServlet extends HttpServlet {
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
-        //request.setAttribute("vehicles", vehicles);
 
         this.getServletContext()
                 .getRequestDispatcher("/WEB-INF/views/vehicles/details.jsp")

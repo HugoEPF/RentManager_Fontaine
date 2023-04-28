@@ -25,7 +25,7 @@ public class UsersServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     //private ClientService clientService = ClientService.getInstance();
     @Autowired
-   ClientService clientService;
+    private ClientService clientService;
 
     public void init() throws ServletException{
     super.init();

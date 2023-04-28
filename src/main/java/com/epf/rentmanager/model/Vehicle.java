@@ -1,5 +1,7 @@
 package com.epf.rentmanager.model;
 
+import com.epf.rentmanager.exception.DaoException;
+
 public class Vehicle {
     private long id;
     private String constructeur;
@@ -40,7 +42,12 @@ public class Vehicle {
     public Vehicle() {
         this(0, "constructeur", 0);
     }
-
+    /**
+     * Permets de vérifier si le véhicule a plus de 2 places et moins de 9
+     * @param vehicle
+     * @return boolean
+     * @throws DaoException
+     */
     public static boolean isNbPlaces_TwoNine(Vehicle vehicle) {
         return vehicle.nb_places >= 2 && vehicle.nb_places <= 9;
     }

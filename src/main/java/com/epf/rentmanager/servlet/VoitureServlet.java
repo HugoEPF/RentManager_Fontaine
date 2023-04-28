@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/cars")
 public class VoitureServlet extends HttpServlet {
     @Autowired
-     VehicleService vehicleService;
+    private VehicleService vehicleService;
     /**
      *
      */

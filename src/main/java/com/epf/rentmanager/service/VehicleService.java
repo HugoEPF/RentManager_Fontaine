@@ -27,7 +27,12 @@ public class VehicleService {
 	private VehicleService() {
 		this.vehicleDao = vehicleDao;
 	}
-
+	/**
+	 * Permets de créer un véhicule
+	 * @param vehicle
+	 * @return
+	 * @throws DaoException
+	 */
 	public long create(Vehicle vehicle) throws ServiceException {
 		try {
 			return vehicleDao.create(vehicle);
@@ -37,7 +42,12 @@ public class VehicleService {
 		}
 
 	}
-
+	/**
+	 * Permets de trouver un véhicule
+	 * @param id
+	 * @return un véhicule
+	 * @throws DaoException
+	 */
 	public Vehicle findById(long id) throws ServiceException {
 		if(id<0) {
 			throw new ServiceException();
@@ -52,7 +62,12 @@ public class VehicleService {
 
 
 	}
-
+	/**
+	 * Permets de trouver des véhicules par rapport aux clients
+	 * @param client_id
+	 * @return une liste de véhicule
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findByClientId(long client_id) throws ServiceException {
 		if(client_id<0) {
 			throw new ServiceException();
@@ -67,7 +82,12 @@ public class VehicleService {
 
 
 	}
-
+	/**
+	 * Permets de trouver tous les véhicules
+	 * @param
+	 * @return une liste de véhicules
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findAll() throws ServiceException {
 		try {
 			return vehicleDao.findAll();
@@ -78,7 +98,12 @@ public class VehicleService {
 
 
 	}
-
+	/**
+	 * Permets de supprimer un véhicule
+	 * @param id
+	 * @return
+	 * @throws DaoException
+	 */
 	public long delete(int id) throws ServiceException {
 		try {
 			return vehicleDao.delete(id);
@@ -88,7 +113,12 @@ public class VehicleService {
 		}
 
 	}
-
+	/**
+	 * Permets de modifier un véhicule
+	 * @param vehicle
+	 * @return
+	 * @throws DaoException
+	 */
 	public void edit(Vehicle vehicle) throws ServiceException {
 		try {
 			vehicleDao.edit(vehicle);
@@ -98,7 +128,12 @@ public class VehicleService {
 		}
 
 	}
-
+	/**
+	 * Permets de trouver des véhicules par rapport aux réservations
+	 * @param rent_id
+	 * @return une liste de véhicules
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findByReservationVehicle(long rent_id) throws ServiceException {
 		try {
 			return vehicleDao.findByReservationVehicle(rent_id);
@@ -110,7 +145,12 @@ public class VehicleService {
 
 	}
 
-
+	/**
+	 * Permets de compter les véhicules
+	 * @param
+	 * @return un nombre
+	 * @throws DaoException
+	 */
 	public int count() throws DaoException {
 
 

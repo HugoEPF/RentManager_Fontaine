@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/cars/create")
 public class CreateVehicleServlet extends HttpServlet {
     @Autowired
-     VehicleService vehicleService;
+     private VehicleService vehicleService;
     /**
      *
      */
@@ -56,7 +56,7 @@ public class CreateVehicleServlet extends HttpServlet {
             }
 
             if(nbPlaces == false) {
-                response.getWriter().write(" error nombre de places");
+                response.getWriter().write("Erreur : nombre de places du véhicules incorrecte\n");
             }
 
         }  catch (ServiceException e) {
