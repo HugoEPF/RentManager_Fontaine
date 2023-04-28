@@ -32,42 +32,43 @@
 
                                     <div class="col-sm-10">
                                     <select class="form-control" id="car" name="car">
-                                    <c:forEach        items="${carObj}"    var="cars">
-                                   <option value = "${cars.id}"> ${cars.constructeur}</option>
-                                    </c:forEach>
-                                    </select>
+                                     <c:forEach        items="${carObj}"    var="cars">
+                                      <option value = "${cars.id}"> ${cars.constructeur}</option>
+                                      </c:forEach>
+                                       </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="client" class="col-sm-2 control-label">Client</label>
 
                                     <div class="col-sm-10">
-                                        <select class="form-control" id="client" name="client">
-                                                                            <c:forEach        items="${clientObj}"    var="client">
-                                                                            <option value = "${client.id}"> ${client.nom} ${client.prenom} </option>
-                                                                            </c:forEach>
-                                                                            </select>
+                                    <select class="form-control" id="client" name="client">
+                                    <c:forEach        items="${clientObj}"    var="client">
+                                    <option value = "${client.id}" ${client.id == rents.client_id? 'selected' : ''}> ${client.nom} ${client.prenom} </option>
+                                     </c:forEach>
+                                      </select>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="begin" class="col-sm-2 control-label">Date de debut</label>
-
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" id="begin" name="begin" required>
+                                        <input type="date" class="form-control" id="begin" name="begin" required
+                                        value= ${rents.debut} onFocus="this.value='';">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="end" class="col-sm-2 control-label">Date de fin</label>
-
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" id="end" name="end" required>
+                                        <input type="date" class="form-control" id="end" name="end" required
+                                        value= ${rents.fin} onFocus="this.value='';">
                                     </div>
                                 </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">Ajouter</button>
+                                <button type="submit" class="btn btn-info pull-right">Modifier</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>

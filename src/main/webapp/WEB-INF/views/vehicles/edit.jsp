@@ -14,7 +14,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Utilisateurs
+                Voitures
             </h1>
         </section>
 
@@ -24,41 +24,36 @@
                 <div class="col-md-12">
                     <!-- Horizontal Form -->
                     <div class="box">
-                        <!-- form start -->
                         <form class="form-horizontal" method="post">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="last_name" class="col-sm-2 control-label">Nom</label>
-
+                                    <label for="manufacturer" class="col-sm-2 control-label">Marque</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom"
-                                        value= ${clients.nom} onFocus="this.value='';">
+                                        <input type="text" class="form-control" id="manufacturer" name="manufacturer" placeholder="Marque"
+                                        required value= ${vehicles.constructeur} onFocus="this.value='';">
                                     </div>
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="first_name" class="col-sm-2 control-label">Prenom</label>
+                                    <label for="seats" class="col-sm-2 control-label">Nombre de places</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prenom"
-                                        value= ${clients.prenom} onFocus="this.value='';">
+                                        <input type="text" class="form-control" id="seats" name="seats" placeholder="Nombre de places" required
+                                        value= ${vehicles.nb_places} onFocus="this.value='';">
                                     </div>
                                 </div>
+                                <!--
                                 <div class="form-group">
-                                    <label for="email" class="col-sm-2 control-label">Email</label>
+                                    <label for="owner" class="col-sm-2 control-label">Propriétaire</label>
 
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email"
-                                        value= ${clients.email} onFocus="this.value='';">
+                                        <select class="form-control" id="owner" name="owner">
+                                            <option value="1">John Doe</option>
+                                            <option value="2">Jane Doe</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                                                    <label for="naissance" class="col-sm-2 control-label">Date de naissance</label>
-
-                                                                    <div class="col-sm-10">
-                                                                        <input type="date" class="form-control" id="naissance" name="naissance" placeholder="Naissance"
-                                                                        value= ${clients.naissance} onFocus="this.value='';">
-                                                                    </div>
-                                                                </div>
+                                -->
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">

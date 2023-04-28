@@ -89,6 +89,16 @@ public class VehicleService {
 
 	}
 
+	public void edit(Vehicle vehicle) throws ServiceException {
+		try {
+			vehicleDao.edit(vehicle);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+
+	}
+
 	public List<Vehicle> findByReservationVehicle(long rent_id) throws ServiceException {
 		try {
 			return vehicleDao.findByReservationVehicle(rent_id);

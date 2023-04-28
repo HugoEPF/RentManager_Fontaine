@@ -23,8 +23,11 @@
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/DeleteVehicleServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/DetailsUsersServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/model/Reservation.java
+/Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/EditRentServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/DetailsVehicleServlet.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/model/Client.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/exception/ServiceException.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/service/ClientService.java
 /Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/service/VehicleService.java
+/Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/EditVehiclesServlet.java
+/Users/Hugo/Downloads/rentmanager/src/main/java/com/epf/rentmanager/servlet/EditUsersServlet.java

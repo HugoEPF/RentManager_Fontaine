@@ -82,6 +82,16 @@ public class ReservationService {
 
     }
 
+    public void edit(Reservation reservation) throws ServiceException {
+        try {
+            reservationDao.edit(reservation);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+
+    }
+
     public Reservation findResaById(int rent_id) throws ServiceException {
         try {
             return reservationDao.findResaById(rent_id);

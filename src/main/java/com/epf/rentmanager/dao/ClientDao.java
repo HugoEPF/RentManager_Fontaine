@@ -27,7 +27,7 @@ public class ClientDao {
 	private static final String FIND_CLIENTS_MAIL = "SELECT id, nom, prenom, email, naissance FROM Client WHERE email=?;";
 	private static final String FIND_CLIENT_BY_VEHICLES= "SELECT * FROM Client INNER JOIN Reservation ON Reservation.client_id=Client.id WHERE Reservation.vehicle_id=?;";
 	private static final String FIND_CLIENT_BY_RENT= "SELECT * FROM Client INNER JOIN Reservation ON Reservation.client_id=Client.id WHERE Reservation.id=?;";
-
+	private static final String EDIT_CLIENT = "UPDATE Client SET nom=?, prenom=?, email=?, naissance=? WHERE id=?;";
 	public long create(Client client) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -49,6 +49,28 @@ public class ClientDao {
 			return id;
 		} catch (SQLException ex) {
 			throw new RuntimeException(ex);
+		}
+
+	}
+
+	public void edit(Client client) throws DaoException {
+		try {
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement ps =
+					connection.prepareStatement(EDIT_CLIENT);
+
+			ps.setString(1, client.getNom());
+			ps.setString(2, client.getPrenom());
+			ps.setString(3, client.getEmail());
+			ps.setDate(4, Date.valueOf(client.getNaissance()));
+			ps.setLong(5,client.getId());
+			ps.executeUpdate();
+			ps.close();
+			connection.close();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+
 		}
 
 	}

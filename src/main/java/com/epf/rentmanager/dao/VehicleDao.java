@@ -26,14 +26,12 @@ public class VehicleDao {
 	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, nb_places FROM Vehicle;";
 	private static final String FIND_VEHICLES_BY_CLIENT = "SELECT * FROM Vehicle INNER JOIN Reservation ON Reservation.vehicle_id=Vehicle.id WHERE Reservation.client_id=?;";
 	private static final String FIND_VEHICLE_BY_RENT= "SELECT * FROM Vehicle INNER JOIN Reservation ON Reservation.vehicle_id=Vehicle.id WHERE Reservation.id=?;";
-
+	private static final String EDIT_VEHICLE = "UPDATE Vehicle SET constructeur=?, nb_places=? WHERE id=?;";
 	public long create(Vehicle vehicle) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement ps =
 					connection.prepareStatement(CREATE_VEHICLE_QUERY, Statement.RETURN_GENERATED_KEYS);
-			System.out.println(vehicle.getConstructeur());
-			System.out.println(vehicle.getNb_places());
 			ps.setString(1, vehicle.getConstructeur());
 			ps.setInt(2, vehicle.getNb_places());
 			ps.execute();
@@ -48,6 +46,26 @@ public class VehicleDao {
 		} catch (SQLException ex) {
 
 			throw new RuntimeException(ex);
+		}
+
+	}
+
+	public void edit(Vehicle vehicle) throws DaoException {
+		try {
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement ps =
+					connection.prepareStatement(EDIT_VEHICLE);
+
+			ps.setString(1, vehicle.getConstructeur());
+			ps.setInt(2, vehicle.getNb_places());
+			ps.setLong(3,vehicle.getId());
+			ps.executeUpdate();
+			ps.close();
+			connection.close();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+
 		}
 
 	}

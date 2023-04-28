@@ -78,6 +78,16 @@ public class ClientService {
 
 	}
 
+	public void edit(Client client) throws DaoException {
+		try {
+			clientDao.edit(client);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+	}
+
 	public List<Client> findByVehicleId(long vehicle_id) {
 		try {
 			return clientDao.findByVehicleId(vehicle_id);
