@@ -50,7 +50,7 @@ import java.util.List;
                 request.setAttribute("rents", reservations);
                request.setAttribute("vehicles", vehicles);
                request.setAttribute("RentCount", reservations.size());
-               // request.setAttribute("VehiclesCount", vehicles.size());
+               request.setAttribute("VehiclesCount", vehicles.stream().distinct().count());
             } catch (final Exception e) {
                 System.out.println(e.getMessage());
             }

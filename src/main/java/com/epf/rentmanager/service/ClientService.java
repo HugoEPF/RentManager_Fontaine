@@ -78,6 +78,24 @@ public class ClientService {
 
 	}
 
+	public List<Client> findByVehicleId(long vehicle_id) {
+		try {
+			return clientDao.findByVehicleId(vehicle_id);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	public List<Client> findByReservationClient(long rent_id) {
+		try {
+			return clientDao.findByReservationClient(rent_id);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
 	public int count() throws DaoException {
 
 

@@ -25,7 +25,8 @@ public class VehicleDao {
 	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur, nb_places FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, nb_places FROM Vehicle;";
 	private static final String FIND_VEHICLES_BY_CLIENT = "SELECT * FROM Vehicle INNER JOIN Reservation ON Reservation.vehicle_id=Vehicle.id WHERE Reservation.client_id=?;";
-	
+	private static final String FIND_VEHICLE_BY_RENT= "SELECT * FROM Vehicle INNER JOIN Reservation ON Reservation.vehicle_id=Vehicle.id WHERE Reservation.id=?;";
+
 	public long create(Vehicle vehicle) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
@@ -134,6 +135,28 @@ public class VehicleDao {
 		}
 		return vehicles;
 	}
-	
+
+	public List<Vehicle> findByReservationVehicle(long rent_id) throws DaoException {
+		List<Vehicle> vehicles = new ArrayList<Vehicle>();
+		try (
+				Connection connection = ConnectionManager.getConnection();
+				PreparedStatement pstatement = connection.prepareStatement(FIND_VEHICLE_BY_RENT);
+		) {
+			pstatement.setLong(1, rent_id);
+			ResultSet resultSet = pstatement.executeQuery();
+			while(resultSet.next())
+				pstatement.setLong(1, rent_id);
+			ResultSet rs = pstatement.executeQuery();
+			while(rs.next())
+				vehicles.add(new Vehicle(rs.getInt("id"), rs.getString("constructeur"),rs.getInt("nb_places")));
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw new DaoException();
+
+		}
+		return vehicles;
+	}
+
+
 
 }

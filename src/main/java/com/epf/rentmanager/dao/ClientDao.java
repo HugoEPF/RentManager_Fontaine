@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.model.Client;
+import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.persistence.ConnectionManager;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +25,8 @@ public class ClientDao {
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
 	private static final String FIND_CLIENTS_MAIL = "SELECT id, nom, prenom, email, naissance FROM Client WHERE email=?;";
+	private static final String FIND_CLIENT_BY_VEHICLES= "SELECT * FROM Client INNER JOIN Reservation ON Reservation.client_id=Client.id WHERE Reservation.vehicle_id=?;";
+	private static final String FIND_CLIENT_BY_RENT= "SELECT * FROM Client INNER JOIN Reservation ON Reservation.client_id=Client.id WHERE Reservation.id=?;";
 
 	public long create(Client client) throws DaoException {
 		try {
@@ -144,6 +147,48 @@ public class ClientDao {
 			e.printStackTrace();
 		}
 
+		return clients;
+	}
+
+	public List<Client> findByVehicleId(long vehicle_id) throws DaoException {
+		List<Client> clients = new ArrayList<Client>();
+		try (
+				Connection connection = ConnectionManager.getConnection();
+				PreparedStatement pstatement = connection.prepareStatement(FIND_CLIENT_BY_VEHICLES);
+		) {
+			pstatement.setLong(1, vehicle_id);
+			ResultSet resultSet = pstatement.executeQuery();
+			while(resultSet.next())
+				pstatement.setLong(1, vehicle_id);
+			ResultSet rs = pstatement.executeQuery();
+			while(rs.next())
+				clients.add(new Client(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),rs.getString("email"),rs.getDate("naissance").toLocalDate()));
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw new DaoException();
+
+		}
+		return clients;
+	}
+
+	public List<Client> findByReservationClient(long rent_id) throws DaoException {
+		List<Client> clients = new ArrayList<Client>();
+		try (
+				Connection connection = ConnectionManager.getConnection();
+				PreparedStatement pstatement = connection.prepareStatement(FIND_CLIENT_BY_RENT);
+		) {
+			pstatement.setLong(1, rent_id);
+			ResultSet resultSet = pstatement.executeQuery();
+			while(resultSet.next())
+				pstatement.setLong(1, rent_id);
+			ResultSet rs = pstatement.executeQuery();
+			while(rs.next())
+				clients.add(new Client(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),rs.getString("email"),rs.getDate("naissance").toLocalDate()));
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw new DaoException();
+
+		}
 		return clients;
 	}
 

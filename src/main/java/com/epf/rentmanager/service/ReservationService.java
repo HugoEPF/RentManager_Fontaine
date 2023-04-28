@@ -81,6 +81,16 @@ public class ReservationService {
         }
 
     }
+
+    public Reservation findResaById(int rent_id) throws ServiceException {
+        try {
+            return reservationDao.findResaById(rent_id);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+
+    }
     public int count() throws DaoException {
 
 
