@@ -4,9 +4,11 @@ import java.sql.*;
 import java.util.List;
 
 import com.epf.rentmanager.dao.ClientDao;
+import com.epf.rentmanager.dao.ReservationDao;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
+import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.persistence.ConnectionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class ClientService {
 	@Autowired
 	private ClientDao clientDao;
 	public static ClientService instance;
+	@Autowired
+	private ReservationService reservationService;
 
 	private ClientService(ClientDao clientDao) {
 		this.clientDao = clientDao;
@@ -36,13 +40,17 @@ public class ClientService {
 		}
 	}
 	/**
-	 * Permets de supprimer un client
+	 * Permets de supprimer un client et les réservations intégrées
 	 * @param id
 	 * @return
 	 * @throws DaoException
 	 */
 	public long delete(int id) throws ServiceException {
 		try {
+			List<Reservation> rentClient = reservationService.findByResaByClientId(id);
+			for(Reservation reservation : rentClient) {
+				reservationService.delete((int) reservation.getId());
+			}
 			return clientDao.delete(id);
 		} catch (DaoException | SQLException e) {
 			e.printStackTrace();

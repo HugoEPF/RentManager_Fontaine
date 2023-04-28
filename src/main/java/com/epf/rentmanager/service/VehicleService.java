@@ -11,6 +11,7 @@ import com.epf.rentmanager.dao.ClientDao;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
+import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.dao.VehicleDao;
 import com.epf.rentmanager.persistence.ConnectionManager;
@@ -23,6 +24,9 @@ public class VehicleService {
 	@Autowired
 	private VehicleDao vehicleDao;
 	public static VehicleService instance;
+
+	@Autowired
+	private	ReservationService reservationService;
 	
 	private VehicleService() {
 		this.vehicleDao = vehicleDao;
@@ -99,13 +103,17 @@ public class VehicleService {
 
 	}
 	/**
-	 * Permets de supprimer un véhicule
+	 * Permets de supprimer un véhicule et les réservations intégrées
 	 * @param id
 	 * @return
 	 * @throws DaoException
 	 */
 	public long delete(int id) throws ServiceException {
 		try {
+			List<Reservation> rentVehicle = reservationService.findByResaByVehicleId(id);
+			for(Reservation reservation : rentVehicle) {
+				reservationService.delete((int) reservation.getId());
+			}
 			return vehicleDao.delete(id);
 		} catch (DaoException | SQLException e) {
 			e.printStackTrace();
